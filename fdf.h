@@ -1,4 +1,4 @@
-s#ifndef FDF_H
+#ifndef FDF_H
 # define FDF_H
 
 #include <stdlib.h>
@@ -7,6 +7,7 @@ s#ifndef FDF_H
 #include <stddef.h>
 #include <math.h>
 #include <stdio.h>
+#include "./libs/gnl/get_next_line.h"
 
 
 typedef struct s_data
@@ -22,12 +23,22 @@ typedef struct s_data
 }			t_data;
 
 
-typedef struct node_s
+typedef struct s_node
 {
 	char *str;
-	int *row;
-	struct node_s *next;
+	char **row;
+	struct s_node *next;
 
-} node_t
+} t_node;
+
+
+void insert_node(t_node **head, t_node *new_node);
+int list_traverse(t_node **head, int *column_numb);
+char ***matrix_generate(t_node **head, int row_numb, int column_numb);
+char ***parsing(int fd);
+t_node *read_map(int fd, int *row_num);
+
+
+
 
 #endif

@@ -1,12 +1,18 @@
 NAME = fdf
 
-LIBFT = ./libft/libft.a
-MLX = libmlx_Linux.a
-GNL = ./gnl/get_next_line.a
+LIBFT = ./libs/libft/libft.a
+MLX = ./libs/libmlx_Linux.a
+GNL = ./libs/gnl/get_next_line.a
 
 SRC = 	parsing.c \
-		./gnl/get_next_line.c \
-		./gnl/get_next_line_utils.c \
+		rendering.c \
+		parsing.utils.c \
+		rendering_utils.c \
+		./libs/gnl/get_next_line.c \
+		./libs/gnl/get_next_line_utils.c \
+		./libs/libft/ft_split.c \
+		./libs/libft/ft_atoi.c \
+
 
 OBJ = $(SRC:.c=.o)
 
