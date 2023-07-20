@@ -3,37 +3,38 @@
 char	***parsing(int fd, int *row_numb, int *column_numb)
 {
 	char	***parsed;
-	t_node	*temp_list;
+	t_map_row	*temp_list;
 
-	temp_list = read_map(fd, &row_numb);
-	list_traverse(&temp_list, &column_numb);
+	temp_list = read_map(fd, row_numb);
+	list_traverse(&temp_list, column_numb);
 	//Make a matrix with the number dimensions(row*columns)
 	//and the data we stored (with the functions above) in the linked list.
-	parsed = matrix_generate(&temp_list, row_numb, column_numb);
+	parsed = matrix_generate(&temp_list, row_numb);
 	return (parsed);
 }
 
 //Read file, store each line, count rows thereby...
 // Ask Akadil something at the end, about return (NULL)
-t_node	*read_map(int fd, int *row_num)
+t_map_row	*read_map(int fd, int *row_num)
 {
 	char	*temp;
-	t_node	*new_node;
-	t_node	*head;
+	t_map_row	*head;
 
+	head = NULL;
 	while (1)
 	{
 		temp = get_next_line(fd);
 		if (temp)
 		{
-			new_node = malloc(sizeof(t_node));
+			t_map_row	*new_node;
+			new_node = malloc(sizeof(t_map_row));
 			if (!new_node)
 			{
-				free_list(head);
+				free_map_rows(head);
 				return (NULL);
 			}
 			new_node->str = temp;
-			insert_node(head, new_node);
+			insert_node(&head, new_node);
 			*row_num = *row_num + 1;
 		}
 		else
@@ -43,18 +44,20 @@ t_node	*read_map(int fd, int *row_num)
 }
 
 //For each row separate into columns, count columns...
-int	list_traverse(t_node **head, int *column_numb)
+int	list_traverse(t_map_row **head, int *column_numb)
 {
-	t_node	*ptr;
+	t_map_row	*ptr;
+	char space;
 
 	ptr = *head;
+	space = 32;
 	while (ptr != NULL)
 	{
-		ptr->row = ft_split(ptr->str, " ");
+		ptr->row = ft_split(ptr->str, space);
 		if (!ptr->row)
 		{
-			free_list(head);
-			return (NULL);
+			free_map_rows(*head);
+			return (1);
 		}
 		ptr = ptr->next;
 		column_numb = column_numb + 1;
@@ -64,12 +67,14 @@ int	list_traverse(t_node **head, int *column_numb)
 
 //Make a matrix with the number dimensions(row*columns)
 //and the data we temporarily stored in the linked list.
-char	***matrix_generate(t_node **head, int row_numb, int column_numb)
+char	***matrix_generate(t_map_row **head, int *row_numb)
 {
 	char	***matrix;
-	t_node	*ptr;
+	t_map_row	*ptr;
+	int size;
 
-	matrix = malloc(sizeof(char **) * row_numb);
+	size = *row_numb;
+	matrix = malloc(sizeof(char **) * size);
 	if (!matrix)
 		return (NULL);
 	ptr = *head;
@@ -80,7 +85,6 @@ char	***matrix_generate(t_node **head, int row_numb, int column_numb)
 	}
 	return (matrix);
 }
-
 
 
 //TODO: convert to int before oing isonometric projection.

@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 17:31:59 by shuppert          #+#    #+#             */
-/*   Updated: 2023/05/09 21:11:30 by shuppert         ###   ########.fr       */
+/*   Created: 2023/05/08 17:04:37 by shuppert          #+#    #+#             */
+/*   Updated: 2023/05/09 13:31:17 by shuppert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_list **frontlst, t_list *new_lst)
 {
-	t_list	*node;
-
-	if (*lst != NULL && lst != NULL)
+	if (*frontlst != NULL)
 	{
-		node = *lst;
-		while (node->next)
-			node = node->next;
-		node->next = new;
+		new_lst->next = *frontlst;
+		*frontlst = new_lst;
 	}
 	else
-	{
-		*lst = new;
-	}
+		*frontlst = new_lst;
 }

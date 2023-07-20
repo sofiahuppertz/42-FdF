@@ -7,7 +7,9 @@
 #include <stddef.h>
 #include <math.h>
 #include <stdio.h>
-#include "./libs/gnl/get_next_line.h"
+#include "libs/libft/libft.h"
+#include "libs/libft/get_next_line.h"
+#include "libs/minilibx-linux/mlx.h"
 
 
 typedef struct s_data
@@ -23,13 +25,13 @@ typedef struct s_data
 }			t_data;
 
 
-typedef struct s_node
+typedef struct s_map_rows
 {
 	char *str;
 	char **row;
-	struct s_node *next;
+	struct s_map_rows *next;
 
-} t_node;
+} t_map_row;
 
 typedef struct s_point
 {
@@ -40,12 +42,13 @@ typedef struct s_point
 
 
 t_point edge_projection(int x, int y, int z);
-void insert_node(t_node **head, t_node *new_node);
+int	free_map_rows(t_map_row *head);
+void insert_node(t_map_row **head, t_map_row *new_node);
 t_point **isometric_transformation(char **matrix, int row_numb, int column_numb);
-int list_traverse(t_node **head, int *column_numb);
-char ***matrix_generate(t_node **head, int row_numb, int column_numb);
+int list_traverse(t_map_row **head, int *column_numb);
+char ***matrix_generate(t_map_row **head, int *row_numb);
 char	***parsing(int fd, int *row_numb, int *column_numb);
-t_node *read_map(int fd, int *row_num);
+t_map_row *read_map(int fd, int *row_num);
 
 
 

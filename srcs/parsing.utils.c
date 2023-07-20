@@ -1,8 +1,8 @@
 #include "fdf.h"
 
-void insert_node(t_node **head, t_node *new_node)
+void insert_node(t_map_row **head, t_map_row *new_node)
 {
-    t_node *current;
+    t_map_row *current;
 
     current = *head;
     while (current->next != NULL)
@@ -13,9 +13,9 @@ void insert_node(t_node **head, t_node *new_node)
     
 }
 
-int	free_list(t_node *head)
+int	free_map_rows(t_map_row *head)
 {
-	t_node	*current;
+	t_map_row	*current;
 	char	*temp;
     char **row_temp;
 

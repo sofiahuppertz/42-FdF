@@ -1,4 +1,4 @@
-#include "fdf.c"
+#include "fdf.h"
 
 //1. Parsing file to matrix.
 //2. Making 3D isometric matrix from the 2D matrix.
