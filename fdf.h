@@ -31,11 +31,20 @@ typedef struct s_node
 
 } t_node;
 
+typedef struct s_point
+{
+	int x;
+	int y;
+}	t_point;
 
+
+
+t_point edge_projection(int x, int y, int z);
 void insert_node(t_node **head, t_node *new_node);
+t_point **isometric_transformation(char **matrix, int row_numb, int column_numb);
 int list_traverse(t_node **head, int *column_numb);
 char ***matrix_generate(t_node **head, int row_numb, int column_numb);
-char ***parsing(int fd);
+char	***parsing(int fd, int *row_numb, int *column_numb);
 t_node *read_map(int fd, int *row_num);
 
 
