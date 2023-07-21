@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     int rows;
     int columns;
     char ***matrix;
+    t_point ***t_matrix;
 
     if (argc != 2)
     {
@@ -21,16 +22,26 @@ int main(int argc, char *argv[])
         ft_printf("Could not open file\n");
         return (1);
     }
+    rows = 0;
+    columns = 0;
     matrix = parsing(file, &rows, &columns);
-    close(file);
+    if (matrix)
+    {
+       ft_printf("Matrix parsed ok.\nWhat it looks like:\n");
+       ft_printf("Number of rows: %i\nNumber of columns: %i\n", rows, columns);
+       for (int n = 0; n < rows; n++)
+            for (int m = 0; m < columns; m++)
+                ft_printf("%s ", matrix[n][m]);
+            ft_printf("\n");
+    }
+    t_matrix = isometric_transformation(matrix, rows, columns);
     if (matrix)
     {
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
-                if (matrix[i][j] != NULL)
-                printf("%s\n", matrix[i][j]);
+                printf("x is: %i, y is: %i\n", t_matrix[i][j]->x, t_matrix[i][j]->y);
             }
         }
     }

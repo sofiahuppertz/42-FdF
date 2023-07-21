@@ -16,7 +16,7 @@ SRCS = $(addprefix srcs/, $(SRCS_NAMES))
 OBJS = $(SRCS_NAMES:.c=.o)
 
 $(EXECUTABLE): $(LIBFT) $(MINILIB) $(OBJS)
-	gcc -g  $(INCLUDE) $(OBJS) $(LIBS_AND_PATH) -o $(EXECUTABLE)
+	gcc -g  $(CFLAGS) $(INCLUDE) $(OBJS) $(LIBS_AND_PATH) -o $(EXECUTABLE)
  
 $(LIBFT): 
 	make -C libs/libft/

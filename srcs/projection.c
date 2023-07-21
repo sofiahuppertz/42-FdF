@@ -10,12 +10,12 @@ t_point ***isometric_transformation(char ***matrix, int row_numb, int column_num
     if (!t_matrix)
         return (NULL);
     //Traverse char ***matrix
-    for (int y = 0; y < row_numb; y++)
+    for (int x = 0; x < row_numb; x++)
     {
-        for (int x = 0; x < column_numb; x++)
+        for (int y = 0; y < column_numb; y++)
         {
-            int z = ft_atoi(matrix[y][x]);
-            t_matrix[y][x] = edge_projection(x, y, z);
+            int z = ft_atoi(matrix[x][y]);
+            t_matrix[x][y] = edge_projection(x, y, z);
         }
     }
     return (t_matrix);

@@ -66,6 +66,7 @@ SRCS_NAMES = ft_memset.c \
 	display_integer.c \
 	display_text.c \
 	display_unsigned_integer.c \
+	str_array_length.c 
 
 SRCS = $(addprefix srcs/, $(SRCS_NAMES))
 

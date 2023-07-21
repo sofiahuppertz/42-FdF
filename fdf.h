@@ -28,7 +28,6 @@ typedef struct s_data
 typedef struct s_map_rows
 {
 	char *str;
-	char **row;
 	struct s_map_rows *next;
 
 } t_map_row;
@@ -43,10 +42,10 @@ typedef struct s_point
 t_map_row *create_node(char *data);
 t_point *edge_projection(int x, int y, int z);
 int	free_map_rows(t_map_row *head);
+int free_str_matrix(char ***matrix, int rows, int columns);
 void insert_node(t_map_row **head, t_map_row *new_node);
 t_point ***isometric_transformation(char ***matrix, int row_numb, int column_numb);
-int list_traverse(t_map_row **head, int *column_numb);
-char ***matrix_generate(t_map_row **head, int *row_numb);
+char ***matrix_generate(t_map_row **head, int *row_numb, int *column_numb);
 char	***parsing(int fd, int *row_numb, int *column_numb);
 t_map_row *read_map(int fd, int *row_num);
 

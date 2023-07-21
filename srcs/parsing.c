@@ -3,17 +3,21 @@
 char	***parsing(int fd, int *row_numb, int *column_numb)
 {
 	char	***parsed;
-	t_map_row	**temp_list;
+	t_map_row	*temp_list;
 
-	*temp_list = read_map(fd, row_numb);
-	if (*temp_list)
+	parsed = NULL;
+	temp_list = read_map(fd, row_numb);
+	t_map_row *ptr = temp_list;
+	while (ptr != NULL)
 	{
-		list_traverse(temp_list, column_numb);
-		parsed = matrix_generate(temp_list, row_numb);
-		return (parsed);
+		ptr = ptr->next;
 	}
-	return (NULL);
-
+	if (temp_list)
+	{
+		parsed = matrix_generate(&temp_list, row_numb, column_numb);
+	}
+	free_map_rows(temp_list);
+	return (parsed);
 }
 
 //Read file, store each line, count rows thereby...
@@ -31,60 +35,52 @@ t_map_row	*read_map(int fd, int *row_num)
 		if (!new_node)
 		{
 			free_map_rows(start);
+			return (NULL);
 		}
 		insert_node(&start, new_node);
 		*row_num = *row_num + 1;
+		free(new_line);
 	}
-	free(new_line);
 	return (start);
 }
 
 //For each row separate into columns, count columns...
-int	list_traverse(t_map_row **head, int *column_numb)
-{
-	t_map_row	*ptr;
-	char space;
-
-	ptr = *head;
-	space = 32;
-	while (ptr != NULL)
-	{
-		ptr->row = ft_split(ptr->str, space);
-		if (!ptr->row)
-		{
-			free_map_rows(*head);
-			return (1);
-		}
-		ptr = ptr->next;
-		column_numb = column_numb + 1;
-	}
-	return (0);
-}
-
 //Make a matrix with the number dimensions(row*columns)
 //and the data we temporarily stored in the linked list.
-char	***matrix_generate(t_map_row **head, int *row_numb)
+char	***matrix_generate(t_map_row **head, int *row_numb, int *column_numb)
 {
+	t_map_row	*current;
 	char	***matrix;
-	char ***matrix_start;
-	t_map_row	*ptr;
-	int size;
+	char space;
+	int	row;
+	int len;
 
-	size = *row_numb;
-	matrix = malloc(sizeof(char **) * size);
+	matrix = malloc(sizeof(char **) * (*row_numb) + 1);
 	if (!matrix)
 		return (NULL);
-	ptr = *head;
-	matrix_start = matrix;
-	while (ptr != NULL)
+	current = *head;
+	row = 0;
+	space = 32;
+	while (current != NULL )
 	{
-		*matrix = ptr->row;
-		matrix++;
-		ptr = ptr->next;
+		matrix[row] = ft_split((const char *)current->str, space);
+		if (!matrix[row])
+		{
+			free_str_matrix(matrix, *row_numb, *column_numb);
+			return (NULL);
+		}
+		if (row == 0)
+		{
+			len = (int)str_array_length((const char **)matrix[0]);
+			*column_numb = len;
+		}
+		current = current->next;
+		row++;
 	}
-	*matrix = NULL;
-	return (matrix_start);
+	matrix[row] = NULL;
+	head = NULL;
+	return (matrix);
 }
 
 
-//TODO: convert to int before oing isonometric projection.
+//TODO: convert to int before doing isonometric projection.
