@@ -26,6 +26,7 @@ int	free_map_rows(t_map_row *head)
         row_temp = current->row;
 		head = head->next;
 		free(temp);
+		free(row_temp);
 		free(current);
 	}
 	return (0);

@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include "libs/libft/libft.h"
 #include "libs/libft/get_next_line.h"
+#include "libs/libft/ft_printf.h"
 #include "libs/minilibx-linux/mlx.h"
-
 
 typedef struct s_data
 {
