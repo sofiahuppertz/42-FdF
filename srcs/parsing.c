@@ -1,46 +1,42 @@
-#include "fdf.h"
+#include "../fdf.h"
 
 char	***parsing(int fd, int *row_numb, int *column_numb)
 {
 	char	***parsed;
-	t_map_row	*temp_list;
+	t_map_row	**temp_list;
 
-	temp_list = read_map(fd, row_numb);
-	list_traverse(&temp_list, column_numb);
-	//Make a matrix with the number dimensions(row*columns)
-	//and the data we stored (with the functions above) in the linked list.
-	parsed = matrix_generate(&temp_list, row_numb);
-	return (parsed);
+	*temp_list = read_map(fd, row_numb);
+	if (*temp_list)
+	{
+		list_traverse(temp_list, column_numb);
+		parsed = matrix_generate(temp_list, row_numb);
+		return (parsed);
+	}
+	return (NULL);
+
 }
 
 //Read file, store each line, count rows thereby...
 // Ask Akadil something at the end, about return (NULL)
 t_map_row	*read_map(int fd, int *row_num)
 {
-	char	*temp;
-	t_map_row	*head;
+	char	*new_line;
+	t_map_row	*start;
+	t_map_row *new_node;
 
-	head = NULL;
-	while (1)
+	start = NULL;
+	while ((new_line = get_next_line(fd)) != NULL)
 	{
-		temp = get_next_line(fd);
-		if (temp)
+		new_node = create_node(ft_strdup(new_line));
+		if (!new_node)
 		{
-			t_map_row	*new_node;
-			new_node = malloc(sizeof(t_map_row));
-			if (!new_node)
-			{
-				free_map_rows(head);
-				return (NULL);
-			}
-			new_node->str = temp;
-			insert_node(&head, new_node);
-			*row_num = *row_num + 1;
+			free_map_rows(start);
 		}
-		else
-			break ;
+		insert_node(&start, new_node);
+		*row_num = *row_num + 1;
 	}
-	return (head);
+	free(new_line);
+	return (start);
 }
 
 //For each row separate into columns, count columns...
@@ -70,6 +66,7 @@ int	list_traverse(t_map_row **head, int *column_numb)
 char	***matrix_generate(t_map_row **head, int *row_numb)
 {
 	char	***matrix;
+	char ***matrix_start;
 	t_map_row	*ptr;
 	int size;
 
@@ -78,12 +75,15 @@ char	***matrix_generate(t_map_row **head, int *row_numb)
 	if (!matrix)
 		return (NULL);
 	ptr = *head;
+	matrix_start = matrix;
 	while (ptr != NULL)
 	{
 		*matrix = ptr->row;
+		matrix++;
 		ptr = ptr->next;
 	}
-	return (matrix);
+	*matrix = NULL;
+	return (matrix_start);
 }
 
 

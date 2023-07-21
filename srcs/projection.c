@@ -1,13 +1,13 @@
-#include "fdf.h"
+#include "../fdf.h"
 
 
-t_point **isometric_transformation(char **matrix, int row_numb, int column_numb)
+t_point ***isometric_transformation(char ***matrix, int row_numb, int column_numb)
 {
     //Allocate space for the 3D matrix
-    t_point **tridimensional;
+    t_point ***t_matrix;
 
-    tridimensional = malloc(sizeof(t_point *) * row_numb);
-    if (!tridimensional)
+    t_matrix = malloc(sizeof(t_point *) * row_numb);
+    if (!t_matrix)
         return (NULL);
     //Traverse char ***matrix
     for (int y = 0; y < row_numb; y++)
@@ -15,9 +15,10 @@ t_point **isometric_transformation(char **matrix, int row_numb, int column_numb)
         for (int x = 0; x < column_numb; x++)
         {
             int z = ft_atoi(matrix[y][x]);
-            tridimensional[y][x] = edge_projection(x, y, z);
+            t_matrix[y][x] = edge_projection(x, y, z);
         }
     }
+    return (t_matrix);
     //Transform each char * to int.
     //Project each point (t_point).
 }
@@ -33,9 +34,11 @@ t_point *edge_projection(int x, int y, int z)
 
     new_point = malloc(sizeof(t_point));
     if(!new_point)
-        return (NULL);
-    new_point.x = floor(cx);
-    new_point.y = floor(cy);
-
+    {
+        ft_printf("Could not make new t_point\n");
+        return (new_point);
+    }     
+    new_point->x = floor(cx);
+    new_point->y = floor(cy);
     return (new_point);
 }

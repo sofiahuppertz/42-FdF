@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include "../fdf.h"
 
 //1. Parsing file to matrix.
 //2. Making 3D isometric matrix from the 2D matrix.
@@ -12,22 +12,27 @@ int main(int argc, char *argv[])
 
     if (argc != 2)
     {
-        ft_printf("Usage: ./fdf [map.fdf]\n");
+        ft_printf("Usage: ./fdf [map]\n");
         return (1);
     }
     file = open(argv[1], O_RDONLY);
-    if (!file)
+    if (file == -1)
     {
         ft_printf("Could not open file\n");
         return (1);
     }
     matrix = parsing(file, &rows, &columns);
-    for (int i = 0; i < rows; i++)
+    close(file);
+    if (matrix)
     {
-        for (int j = 0; j < columns; j++)
+        for (int i = 0; i < rows; i++)
         {
-            printf("%s\n", matrix[i][j]);
+            for (int j = 0; j < columns; j++)
+            {
+                if (matrix[i][j] != NULL)
+                printf("%s\n", matrix[i][j]);
+            }
         }
     }
-
+    return (0);
 }

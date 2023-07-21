@@ -16,21 +16,21 @@ SRCS = $(addprefix srcs/, $(SRCS_NAMES))
 OBJS = $(SRCS_NAMES:.c=.o)
 
 $(EXECUTABLE): $(LIBFT) $(MINILIB) $(OBJS)
-	cc $(CFLAGS) $(INCLUDE) $(OBJS) $(LIBS_AND_PATH) -o $(EXECUTABLE)
+	gcc -g  $(INCLUDE) $(OBJS) $(LIBS_AND_PATH) -o $(EXECUTABLE)
  
 $(LIBFT): 
-	make -C libs/libft
+	make -C libs/libft/
 
 $(MINILIB):
-	make -C libs/minilibx-linux
+	make -C libs/minilibx-linux/
 
 %.o: srcs/%.c
-	cc -Wall -Wextra -Werror $(INCLUDE) -c $< -o $@
+	cc $(INCLUDE) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
-	make clean -C libs/libft
-	make clean -C libs/minilibx-linux
+	make clean -C libs/libft/
+	make clean -C libs/minilibx-linux/
 
 re: clean
 	rm -f $(EXECUTABLE)
