@@ -30,9 +30,11 @@ int main(int argc, char *argv[])
        ft_printf("Matrix parsed ok.\nWhat it looks like:\n");
        ft_printf("Number of rows: %i\nNumber of columns: %i\n", rows, columns);
        for (int n = 0; n < rows; n++)
+       {
             for (int m = 0; m < columns; m++)
                 ft_printf("%s ", matrix[n][m]);
             ft_printf("\n");
+       }
     }
 
     t_matrix = isometric_transformation(matrix, rows, columns);
@@ -47,5 +49,6 @@ int main(int argc, char *argv[])
             }
         }
     }
+    wireframe_rendering(t_matrix, rows, columns);
     return (0);
 }

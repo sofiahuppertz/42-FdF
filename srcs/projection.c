@@ -41,6 +41,10 @@ t_point *projected_point(int x, int y, int z)
     int isoX;
     int isoY;
 
+    x = x * 10;
+    y = y * 10;
+    z = z * 10;
+
     angle = 0.523599;
     isoX = (x - y) * cos(angle);
     isoY = -(z) + (x + y) * sin(angle);
@@ -50,8 +54,8 @@ t_point *projected_point(int x, int y, int z)
         ft_printf("Could not make new t_point\n");
         return (new_point);
     }     
-    new_point->x = isoX;
-    new_point->y = isoY;
+    new_point->x = isoX + 500;
+    new_point->y = isoY + 500;
     return (new_point);
 }
 

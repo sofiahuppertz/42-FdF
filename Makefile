@@ -1,10 +1,10 @@
 EXECUTABLE	= fdf
 LIBFT	= libs/libft/libft.a
-MINILIB = libs/minilibx-linux/libmlx.a
+MINILIB = libs/minilibx-linux/libmlx_Linux.a
 
-INCLUDE = -I. -I/libs/libft/ -I./libs/minilibx-linux
-CFLAGS = -Wall -Wextra -Werror -lXext -lX11 -lm -lz
-LIBS_AND_PATH = -L libs/libft -lft -L libs/minilibx-linux -lmlx
+INCLUDE = -I./ -I/libs/libft/ -I./libs/minilibx-linux
+CFLAGS = -Wall -Wextra -Werror
+LIBS_AND_PATH = -L libs/libft -lft -L libs/minilibx-linux -lmlx_Linux  -lXext -lX11 -lm -lz
 
 SRCS_NAMES = main.c \
 	parsing.c \
@@ -15,8 +15,13 @@ SRCS_NAMES = main.c \
 SRCS = $(addprefix srcs/, $(SRCS_NAMES))
 OBJS = $(SRCS_NAMES:.c=.o)
 
+all		: $(EXECUTABLE)
+
 $(EXECUTABLE): $(LIBFT) $(MINILIB) $(OBJS)
-	gcc -g  $(CFLAGS) $(INCLUDE) $(OBJS) $(LIBS_AND_PATH) -o $(EXECUTABLE)
+	cc $(OBJS) -o $(EXECUTABLE) $(LIBS_AND_PATH)
+
+%.o: srcs/%.c
+	cc $(INCLUDE) $(CFLAGS) -c $< -o $@
  
 $(LIBFT): 
 	make -C libs/libft/
@@ -24,15 +29,15 @@ $(LIBFT):
 $(MINILIB):
 	make -C libs/minilibx-linux/
 
-%.o: srcs/%.c
-	cc $(INCLUDE) -c $< -o $@
+fclean	: clean
+	rm -f $(EXECUTABLE) $(LIBFT) $(MINILIB)
 
 clean:
 	rm -f $(OBJS)
 	make clean -C libs/libft/
 	make clean -C libs/minilibx-linux/
 
-re: clean
-	rm -f $(EXECUTABLE)
 
-.PHONY: clean re
+re		: fclean all
+
+.PHONY: clean fclean all re

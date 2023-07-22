@@ -6,7 +6,7 @@
 #    By: shuppert <shuppert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 18:35:09 by shuppert          #+#    #+#              #
-#    Updated: 2023/07/19 17:48:33 by shuppert         ###   ########.fr        #
+#    Updated: 2023/07/22 15:26:32 by shuppert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,18 +68,30 @@ SRCS_NAMES = ft_memset.c \
 	display_unsigned_integer.c \
 	str_array_length.c 
 
-SRCS = $(addprefix srcs/, $(SRCS_NAMES))
+SRCS_DIR	= srcs/
+OBJECTS_DIR	= objects/
 
-OBJS = $(addprefix objects/, $(SRCS_NAMES:.c=.o))
+SRCS = $(addprefix $(SRCS_DIR), $(SRCS_NAMES))
 
-objects/%.o: srcs/%.c
-	mkdir -p objects
-	cc -Wall -Wextra -Werror -I. -c $< -o $@
+OBJS = $(addprefix $(OBJECTS_DIR), ${SRCS_NAMES:.c=.o})
 
-$(LIB_NAME): $(OBJS)
+all			: $(LIB_NAME)
+
+$(LIB_NAME)	: $(OBJS)
 	ar rcs $(LIB_NAME) $(OBJS)
 
-clean: $(OBJS) $(LIB_NAME)
-	rm -f $(OBJS) $(LIB_NAME)
+objects/%.o	: srcs/%.c $(OBJECTS_DIR)
+	cc -Wall -Wextra -Werror -I. -c $< -o $@
 
-.PHONY: clean re
+$(OBJECTS_DIR)	:
+	mkdir -p objects
+
+fclean		:	clean
+	rm -f $(LIB_NAME)
+
+clean		:
+	rm -f $(OBJS)
+
+re			:	fclean all
+
+.PHONY: all clean fclean re
