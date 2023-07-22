@@ -12,6 +12,9 @@
 #include "libs/libft/ft_printf.h"
 #include "libs/minilibx-linux/mlx.h"
 
+#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 1920
+
 typedef struct s_data
 {
 	void	*mlx;
@@ -40,13 +43,14 @@ typedef struct s_point
 
 
 t_map_row *create_node(char *data);
-t_point *edge_projection(int x, int y, int z);
-int	free_map_rows(t_map_row *head);
-int free_str_matrix(char ***matrix, int rows, int columns);
+void	free_map_rows(t_map_row *head);
+void free_point_matrix(t_point ***matrix);
+void free_str_matrix(char ***matrix, int rows, int columns);
 void insert_node(t_map_row **head, t_map_row *new_node);
 t_point ***isometric_transformation(char ***matrix, int row_numb, int column_numb);
 char ***matrix_generate(t_map_row **head, int *row_numb, int *column_numb);
 char	***parsing(int fd, int *row_numb, int *column_numb);
+t_point *projected_point(int x, int y, int z);
 t_map_row *read_map(int fd, int *row_num);
 
 

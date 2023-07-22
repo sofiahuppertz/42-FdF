@@ -34,14 +34,16 @@ int main(int argc, char *argv[])
                 ft_printf("%s ", matrix[n][m]);
             ft_printf("\n");
     }
+
     t_matrix = isometric_transformation(matrix, rows, columns);
     if (matrix)
     {
+        ft_printf("Isometric transformetion worked.\n");
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
-                printf("x is: %i, y is: %i\n", t_matrix[i][j]->x, t_matrix[i][j]->y);
+                printf(" %i, %i, ", t_matrix[i][j]->x, t_matrix[i][j]->y);
             }
         }
     }

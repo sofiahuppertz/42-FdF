@@ -32,7 +32,7 @@ t_map_row *create_node(char *data)
 	return(new_node);
 }
 
-int	free_map_rows(t_map_row *head)
+void	free_map_rows(t_map_row *head)
 {
 	t_map_row	*current;
 	char	*data;
@@ -45,10 +45,9 @@ int	free_map_rows(t_map_row *head)
 		free(data);
 		free(current);
 	}
-	return (0);
 }
 
-int free_str_matrix(char ***matrix, int rows, int columns)
+void free_str_matrix(char ***matrix, int rows, int columns)
 {
 	for (int i = 0; i < rows; i++)
 	{
@@ -59,5 +58,4 @@ int free_str_matrix(char ***matrix, int rows, int columns)
 		free(matrix[i]);
 	}
 	free(matrix);
-	return (0);
 }

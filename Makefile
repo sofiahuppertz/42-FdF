@@ -3,7 +3,7 @@ LIBFT	= libs/libft/libft.a
 MINILIB = libs/minilibx-linux/libmlx.a
 
 INCLUDE = -I. -I/libs/libft/ -I./libs/minilibx-linux
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -lXext -lX11 -lm -lz
 LIBS_AND_PATH = -L libs/libft -lft -L libs/minilibx-linux -lmlx
 
 SRCS_NAMES = main.c \

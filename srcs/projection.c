@@ -6,16 +6,27 @@ t_point ***isometric_transformation(char ***matrix, int row_numb, int column_num
     //Allocate space for the 3D matrix
     t_point ***t_matrix;
 
-    t_matrix = malloc(sizeof(t_point *) * row_numb);
+    t_matrix = malloc(sizeof(t_point **) * row_numb + 1);
     if (!t_matrix)
         return (NULL);
     //Traverse char ***matrix
+    t_matrix[row_numb] = NULL;
     for (int x = 0; x < row_numb; x++)
     {
+        t_matrix[x] = malloc(sizeof(t_point *) * column_numb + 1);
+        if (!t_matrix[x])
+        {
+            //free t_matrix.
+            ft_printf("Memory allocation failed.\n");
+            return(NULL);
+        }
+        t_matrix[x][column_numb] = NULL;
         for (int y = 0; y < column_numb; y++)
         {
             int z = ft_atoi(matrix[x][y]);
-            t_matrix[x][y] = edge_projection(x, y, z);
+            t_matrix[x][y] = projected_point(x, y, z);
+            if (!t_matrix[x][y])
+                free_point_matrix(t_matrix);
         }
     }
     return (t_matrix);
@@ -23,22 +34,44 @@ t_point ***isometric_transformation(char ***matrix, int row_numb, int column_num
     //Project each point (t_point).
 }
 
-t_point *edge_projection(int x, int y, int z)
+t_point *projected_point(int x, int y, int z)
 {
     t_point *new_point;
-    double cx;
-    double cy;
+    double angle;
+    int isoX;
+    int isoY;
 
-    cx = ((double)x * sqrt(3) - (double)z * sqrt(3)) / sqrt(6);
-    cy = ((double)x + 2 * y + z) / sqrt(6);
-
+    angle = 0.523599;
+    isoX = (x - y) * cos(angle);
+    isoY = -(z) + (x + y) * sin(angle);
     new_point = malloc(sizeof(t_point));
     if(!new_point)
     {
         ft_printf("Could not make new t_point\n");
         return (new_point);
     }     
-    new_point->x = floor(cx);
-    new_point->y = floor(cy);
+    new_point->x = isoX;
+    new_point->y = isoY;
     return (new_point);
+}
+
+void free_point_matrix(t_point ***matrix)
+{
+    int i = 0;
+    int j = 0;
+
+    if (!matrix) return;
+
+    while (matrix[i] != NULL)
+    {
+        j = 0;
+        while (matrix[i][j] != NULL)
+        {
+            free(matrix[i][j]);
+            j++;
+        }
+        free(matrix[i]);
+        i++;
+    }
+    free(matrix);
 }
