@@ -41,7 +41,6 @@ t_point *projected_point(int x, int y, int z)
     int isoX;
     int isoY;
 
-//TODO:fix this coefficients
     x = x * 10;
     y = y * 10;
     z = z * 10;
@@ -55,7 +54,7 @@ t_point *projected_point(int x, int y, int z)
         ft_printf("Could not make new t_point\n");
         return (new_point);
     }     
-    new_point->x = isoX + 500; //TODO fix offset
+    new_point->x = isoX + 500;
     new_point->y = isoY + 500;
     return (new_point);
 }

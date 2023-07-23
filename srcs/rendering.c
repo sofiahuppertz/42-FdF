@@ -5,7 +5,8 @@ int    wireframe_rendering(t_point ***matrix, int rows, int columns)
     //calculate how many pixels per row and how many pixels per column;
     t_data graphic;
 
-    graphic = intialize_image(graphic);
+    graphic.mlx = mlx_init();
+    set_values(&graphic);
     
     for (int i = 0; i < rows; i++)
     {

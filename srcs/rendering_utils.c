@@ -12,12 +12,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-t_data   intialize_image(t_data init)
+void  set_values(t_data *init)
 {
-    init.mlx = mlx_init();
-    init.window = mlx_new_window(init.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "fdf");
-    init.img = mlx_new_image(init.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-    init.addr = mlx_get_data_addr(init.img, &init.bits_per_pixel, &init.line_length, &init.endian);
-
-    return init;
+    init->window = mlx_new_window(init->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "fdf");
+    init->img = mlx_new_image(init->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+    init->addr = mlx_get_data_addr(init->img, &init->bits_per_pixel, &init->line_length, &init->endian);
 }

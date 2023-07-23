@@ -24,15 +24,6 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	int		x0;
-	int		y0;
-	int		x1;
-	int		y1;
-	int		dx;
-	int		dy;
-	int		sx;
-	int		sy;
-	int		err;
 
 }			t_data;
 
@@ -55,7 +46,6 @@ t_map_row *create_node(char *data);
 void	free_map_rows(t_map_row *head);
 void free_point_matrix(t_point ***matrix);
 void free_str_matrix(char ***matrix, int rows, int columns);
-t_data   intialize_image(t_data un_init);
 void insert_node(t_map_row **head, t_map_row *new_node);
 t_point ***isometric_transformation(char ***matrix, int row_numb, int column_numb);
 char ***matrix_generate(t_map_row **head, int *row_numb, int *column_numb);
