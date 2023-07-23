@@ -1,43 +1,46 @@
 EXECUTABLE	= fdf
 LIBFT	= libs/libft/libft.a
-MINILIB = libs/minilibx-linux/libmlx_Darwin.a
+#MLX = libs/mlx/libmlx_Linux.a
+LIBFT_PATH = libs/libft
+#MLX_PATH = libs/mlx
 
-INCLUDE = -I./ -I./libs/libft/ -I./libs/minilibx-linux/
-CFLAGS = -Wall -Wextra -Werror
-PATH = -L libs/libft/ -lft -L libs/minilibx-linux/ -lmlx_Darwin  -framework OpenGL -framework AppKit -L/usr/X11/lib -lXext -lX11
+INCLUDE = -I./ -I./$(LIBFT_PATH)
+# -I./$(MLX_PATH)
+CFLAGS = -Wall -Wextra -Werror  
 
 SRCS_NAMES = main.c \
 	parsing.c \
 	parsing_utils.c \
 	projection.c \
-	rendering.c \
-	rendering_utils.c
+	offset_and_scale.c \
+#	rendering.c \
+#	rendering_utils.c 
 
 SRCS = $(addprefix srcs/, $(SRCS_NAMES))
 OBJS = $(SRCS_NAMES:.c=.o)
 
 all		: $(EXECUTABLE)
 
-$(EXECUTABLE): $(LIBFT) $(MINILIB) $(OBJS)
-	cc $(PATH) -o $(EXECUTABLE) $(OBJS)
+$(EXECUTABLE): $(LIBFT) $(OBJS)
+	cc $(OBJS) -L $(LIBFT_PATH) -lft -o $(EXECUTABLE)
+#-L $(MLX_PATH) -lmlx_Linux
 
 %.o: srcs/%.c
-	cc $(INCLUDE) $(CFLAGS) -c $< -o $@
+	cc $(CFLAGS) $(INCLUDE) -c $< -o $@
  
 $(LIBFT): 
-	make -C libs/libft/
+	make -C $(LIBFT_PATH)
 
-$(MINILIB):
-	make -C libs/minilibx-linux/
+#$(MLX):
+#	make -C $(MLX_PATH)
 
 fclean	: clean
-	rm -f $(EXECUTABLE) $(LIBFT) $(MINILIB)
+	rm -f $(EXECUTABLE) 
 
 clean:
 	rm -f $(OBJS)
-	make clean -C libs/libft/
-	make clean -C libs/minilibx-linux/
-
+	make clean -C $(LIBFT_PATH)
+#	make clean -C $(MLX_PATH)
 
 re		: fclean all
 

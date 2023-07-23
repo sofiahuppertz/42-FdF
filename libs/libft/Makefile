@@ -80,16 +80,16 @@ all			: $(LIB_NAME)
 $(LIB_NAME)	: $(OBJS)
 	ar rcs $(LIB_NAME) $(OBJS)
 
-objects/%.o	: srcs/%.c $(OBJECTS_DIR)
+objects/%.o	: $(SRCS_DIR)%.c $(OBJECTS_DIR)
 	cc -Wall -Wextra -Werror -I. -c $< -o $@
 
 $(OBJECTS_DIR)	:
 	mkdir -p objects
 
-fclean		:	clean
+clean		: fclean
 	rm -f $(LIB_NAME)
 
-clean		:
+fclean		:
 	rm -f $(OBJS)
 
 re			:	fclean all

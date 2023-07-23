@@ -38,17 +38,32 @@ int main(int argc, char *argv[])
     }
 
     t_matrix = isometric_transformation(matrix, rows, columns);
-    if (matrix)
+    if (t_matrix)
     {
         ft_printf("Isometric transformetion worked.\n");
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
-                printf(" %i, %i, ", t_matrix[i][j]->x, t_matrix[i][j]->y);
+                ft_printf(" %i, %i, ", t_matrix[i][j]->x, t_matrix[i][j]->y);
             }
         }
     }
-    rendering(t_matrix, rows, columns);
+    ft_printf("\n");
+    fit_grid_to_window(t_matrix, rows, columns);
+        if (matrix)
+    {
+        ft_printf("Scale and offset worked.\n");
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                ft_printf(" %i, %i, ", t_matrix[i][j]->x, t_matrix[i][j]->y);
+            }
+        }
+    }
+    //rendering(t_matrix, rows, columns);
     return (0);
 }
+
+
