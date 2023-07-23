@@ -2,12 +2,19 @@
 
 //1. Parsing file to matrix.
 //2. Making 3D isometric matrix from the 2D matrix.
-//3. Rendering: display  wireframe isometric model.
+//3. Sacle and Offset
+//4. Rendering: display  wireframe isometric model.
+
+
+//TODO: eliminate the for loop that prints matrices.
+//TODO: valgrind !!
+//TODO: handle esc and red cross.
+//TODO: Only maybe... rotation.
 int main(int argc, char *argv[])
 {
     int file;
     int rows;
-    int columns;
+    int columns; 
     char ***matrix;
     t_point ***t_matrix;
 

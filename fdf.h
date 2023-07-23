@@ -10,11 +10,11 @@
 #include "libs/libft/libft.h"
 #include "libs/libft/get_next_line.h"
 #include "libs/libft/ft_printf.h"
-#include "libs/mlx/mlx.h"
+//#include "libs/mlx/mlx.h"
 
 #define WINDOW_HEIGHT 1080
 #define WINDOW_WIDTH 1920
-
+#define	MARGIN 
 typedef struct s_data
 {
 	void	*mlx;

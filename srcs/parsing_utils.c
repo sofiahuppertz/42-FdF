@@ -49,13 +49,17 @@ void	free_map_rows(t_map_row *head)
 
 void free_str_matrix(char ***matrix, int rows, int columns)
 {
-	for (int i = 0; i < rows; i++)
+	int i = 0;
+	int j = 0;
+	while (i < rows)
 	{
-		for (int j = 0; j < columns; j++)
+		while ( j < columns)
 		{
 			free(matrix[i][j]);
+			j++;
 		}
 		free(matrix[i]);
+		i++;
 	}
 	free(matrix);
 }
