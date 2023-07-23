@@ -49,6 +49,6 @@ int main(int argc, char *argv[])
             }
         }
     }
-    wireframe_rendering(t_matrix, rows, columns);
+    rendering(t_matrix, rows, columns);
     return (0);
 }

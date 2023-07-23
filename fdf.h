@@ -53,7 +53,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 char	***parsing(int fd, int *row_numb, int *column_numb);
 t_point *projected_point(int x, int y, int z);
 t_map_row *read_map(int fd, int *row_num);
-int    wireframe_rendering(t_point ***matrix, int rows, int columns);
+int    rendering(t_point ***matrix, int rows, int columns);
+void  set_values(t_data *init);
 
 
 
