@@ -2,15 +2,16 @@ EXECUTABLE	= fdf
 LIBFT	= libs/libft/libft.a
 MINILIB = libs/minilibx-linux/libmlx_Darwin.a
 
-INCLUDE = -I./ -I/libs/libft/ -I./libs/minilibx-linux/
+INCLUDE = -I./ -I./libs/libft/ -I./libs/minilibx-linux/
 CFLAGS = -Wall -Wextra -Werror
-LIBS_AND_PATH = -L libs/libft/ -lft -L libs/minilibx-linux/ -lmlx_Darwin -framework OpenGL -framework AppKit
+PATH = -L libs/libft/ -lft -L libs/minilibx-linux/ -lmlx_Darwin  -framework OpenGL -framework AppKit -L/usr/X11/lib -lXext -lX11
 
 SRCS_NAMES = main.c \
 	parsing.c \
 	parsing_utils.c \
 	projection.c \
-	rendering.c 
+	rendering.c \
+	rendering_utils.c
 
 SRCS = $(addprefix srcs/, $(SRCS_NAMES))
 OBJS = $(SRCS_NAMES:.c=.o)
@@ -18,7 +19,7 @@ OBJS = $(SRCS_NAMES:.c=.o)
 all		: $(EXECUTABLE)
 
 $(EXECUTABLE): $(LIBFT) $(MINILIB) $(OBJS)
-	cc $(OBJS) $(LIBS_AND_PATH) -o $(EXECUTABLE)
+	cc $(PATH) -o $(EXECUTABLE) $(OBJS)
 
 %.o: srcs/%.c
 	cc $(INCLUDE) $(CFLAGS) -c $< -o $@
