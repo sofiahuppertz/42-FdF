@@ -20,8 +20,8 @@ void    fit_grid_to_window(t_point ***grid, int height, int width)
         while (j < width)
         {
         
-            grid[i][j]->x = round((layout->scale * (grid[i][j]->x - layout->min_x)) + layout->offset_x);
-            grid[i][j]->y = round((layout->scale * (grid[i][j]->y - layout->min_y) + layout->offset_y));
+            grid[i][j]->x = floor((layout->scale * (grid[i][j]->x - layout->min_x)) + layout->offset_x);
+            grid[i][j]->y = floor((layout->scale * (grid[i][j]->y - layout->min_y) + layout->offset_y));
             j++;
         }
         i++;
@@ -65,15 +65,15 @@ void    set_scale(t_layout *layout)
 {
     double scale;
 
-    scale = WINDOW_WIDTH / layout->width;
-    scale = scale < (WINDOW_HEIGHT / layout->height) ? scale : WINDOW_HEIGHT / layout->height;
+    scale =  (WINDOW_WIDTH - MARGIN) / layout->width;
+    scale = scale < ((WINDOW_HEIGHT - MARGIN)/ layout->height) ? scale : (WINDOW_HEIGHT - MARGIN)/ layout->height;
 
     layout->scale = scale;
 }
 
 void set_offset(t_layout *layout)
 {
-    layout->offset_x = (WINDOW_WIDTH - (layout->width * layout->scale)) / 2;
+    layout->offset_x = ( WINDOW_WIDTH - (layout->width * layout->scale)) / 2;
     layout->offset_y = (WINDOW_HEIGHT- (layout->height * layout->scale)) / 2;
 
 }

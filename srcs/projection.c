@@ -47,13 +47,11 @@ t_point *projected_point(int x, int y, int z)
     int isoX;
     int isoY;
 
-    x = x * 10;
-    y = y * 10;
-    z = z * 10;
 
-    angle = 0.523599;
-    isoX = x + z * cos(angle);
-    isoY = (-y * sin(angle)) - (z * sin(angle));
+    //angle = 0.523599;
+    angle = 0.45 * 100;
+    isoX = double(x - y) * cos(angle * 3.14157 / 180);
+    isoY = -1.0 * (z) + double(x + y) * sin(angle * 3.14157 / 180);
     new_point = malloc(sizeof(t_point));
     if(!new_point)
     {
